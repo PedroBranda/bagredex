@@ -1,5 +1,38 @@
 services:
-  frontend-dev:
+  postgres-development:
+    image: postgis/postgis
+    restart: unless-stopped
+    container_name: postgis-development
+    env_file: ./backend/.env.development
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    profiles:
+      - development
+    ports:
+      - '5432:5432'
+    networks:
+      - default
+
+  backend-app-development:
+    container_name: backend-app-development
+    restart: unless-stopped
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.development
+    env_file:
+      - ./backend/.env.development
+    volumes:
+      - ./backend:/app
+      - ./backend/node_modules:/app/node_modules
+    profiles:
+      - development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres-development
+
+  frontend-app-development:
+    container_name: frontend-app-development
     build:
       context: ./frontend
       dockerfile: Dockerfile.development
@@ -10,3 +43,14 @@ services:
       - ./frontend/node_modules:/app/node_modules
     ports:
       - 80:80
+    profiles:
+      - development
+    networks:
+      - default
+
+volumes:
+  db-data:
+  node_modules:
+
+networks:
+  default:

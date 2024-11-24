@@ -8,4 +8,4 @@ RUN yarn install --ignore-plataform
 
 COPY . .
 
-CMD ["yarn", "dev"]
+CMD ["yarn", "start:dev"]
