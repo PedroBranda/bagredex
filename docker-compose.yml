@@ -23,7 +23,6 @@ services:
       - ./backend/.env.development
     volumes:
       - ./backend:/app
-      - ./backend/node_modules:/app/node_modules
     profiles:
       - development
     ports:
@@ -40,7 +39,6 @@ services:
       - ./frontend/.env.development
     volumes:
       - ./frontend:/app
-      - ./frontend/node_modules:/app/node_modules
     ports:
       - 80:80
     profiles:
@@ -50,7 +48,6 @@ services:
 
 volumes:
   db-data:
-  node_modules:
 
 networks:
   default:

@@ -4,8 +4,6 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
-RUN yarn install --ignore-plataform
-
 COPY . .
 
-CMD ["yarn", "dev"]
+ENTRYPOINT ["sh", "-c", "yarn install --ignore-plataform && yarn dev"]
